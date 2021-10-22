@@ -51,10 +51,8 @@ class MethodChannelWebViewPlatform implements WebViewPlatformController {
 
       case 'onShowFileChooser':
         final bool allowMultipleFiles_ = call.arguments['allowMultipleFiles']!;
-        final List  acceptTypes_ = call.arguments['acceptTypes']! as List;
-        return await _platformCallbacksHandler.onShowFileChooser!(
-            allowMultipleFiles : allowMultipleFiles_,
-            acceptTypes : acceptTypes_);
+        final List acceptTypes_ = call.arguments['acceptTypes']! as List;
+        return await _platformCallbacksHandler.onShowFileChooser(allowMultipleFiles_, acceptTypes_);
 
       case 'onWebResourceError':
         _platformCallbacksHandler.onWebResourceError(

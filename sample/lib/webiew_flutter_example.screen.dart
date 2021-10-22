@@ -3,8 +3,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewFlutterExampleScreen extends StatelessWidget {
 
-// String url = "https://addpipe.com/html-media-capture-demo/";
-  String url = "https://developer.mozilla.org/ko/docs/Web/HTML/Element/Input/file";
+String url = "https://addpipe.com/html-media-capture-demo/";
+  // String url = "https://developer.mozilla.org/ko/docs/Web/HTML/Element/Input/file";
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +13,9 @@ class WebViewFlutterExampleScreen extends StatelessWidget {
           title: Text('webview flutter file tag example'),
         ),
         body: Container(
-          width: double.infinity,
-          height: double.infinity,
           child: WebView(
             initialUrl: url,
+            // initialUrl: new Uri.dataFromString(snapshot.data, mimeType: 'text/html').toString(),
             javascriptMode: JavascriptMode.unrestricted,
             useDefaultShowFileChooser: false,
             onPageStarted: (String url) {

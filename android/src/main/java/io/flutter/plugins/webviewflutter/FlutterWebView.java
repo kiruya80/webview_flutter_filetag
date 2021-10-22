@@ -86,7 +86,7 @@ public class FlutterWebView implements PlatformView, MethodCallHandler {
         WebView webView,
         ValueCallback<Uri[]> filePathCallback,
         FileChooserParams fileChooserParams) {
-      Log.e(LOG_TAG, "onShowFileChooser ==============================================" + useDefaultShowFileChooser);
+      Log.e(LOG_TAG, "onShowFileChooser ===========================" );
       // info as of 2021-03-08:
       // don't use fileChooserParams.getTitle() as it is (always? on Mi 9T Pro Android 10 at least) null
       // don't use fileChooserParams.isCaptureEnabled() as it is (always? on Mi 9T Pro Android 10 at least) false, even when the file upload allows images or any file
@@ -103,24 +103,7 @@ public class FlutterWebView implements PlatformView, MethodCallHandler {
         new FileChooserLauncher(context, allowMultipleFiles, filePathCallback, acceptTypes).start();
       } else {
         List<String> typeList = Arrays.asList(acceptTypes);
-
-        Log.e(LOG_TAG, "fileChooserParams  ================" + fileChooserParams.getMode() + " , " + typeList.toString());
-        flutterWebViewClient.onShowFileChooser(filePathCallback,  allowMultipleFiles,  typeList );
-
-//        String[] uriStrings = intent.getStringArrayExtra(EXTRA_FILE_URIS);
-//        Uri[] result = null;
-//
-//        if (uriStrings != null) {
-//          int uriStringCount = uriStrings.length;
-//          result = new Uri[uriStringCount];
-//
-//          for (int i = 0; i < uriStringCount; i++) {
-//            result[i] = Uri.parse(uriStrings[i]);
-//          }
-//        }
-//
-//        filePathCallback.onReceiveValue(result);
-//        filePathCallback = null;
+        flutterWebViewClient.onShowFileChooser(filePathCallback,  allowMultipleFiles,  typeList);
       }
 
       return true;
@@ -131,9 +114,6 @@ public class FlutterWebView implements PlatformView, MethodCallHandler {
       flutterWebViewClient.onLoadingProgress(progress);
     }
   }
-
-
-
 
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
   @SuppressWarnings("unchecked")
@@ -162,7 +142,6 @@ public class FlutterWebView implements PlatformView, MethodCallHandler {
     flutterWebViewClient = new FlutterWebViewClient(methodChannel);
     Map<String, Object> settings = (Map<String, Object>) params.get("settings");
     if (settings != null) {
-      Log.e(LOG_TAG, "settings != null ==========" );
       applySettings(settings);
     }
 
@@ -461,7 +440,6 @@ public class FlutterWebView implements PlatformView, MethodCallHandler {
 
   private void applySettings(Map<String, Object> settings) {
     for (String key : settings.keySet()) {
-      Log.e(LOG_TAG, "applySettings ==========" + key);
 
       switch (key) {
         case "jsMode":
@@ -478,9 +456,6 @@ public class FlutterWebView implements PlatformView, MethodCallHandler {
 
           webView.setWebViewClient(webViewClient);
           break;
-//        case "useDefaultShowFileChooser":
-//          useDefaultShowFileChooser = (boolean) settings.get(key);
-//          break;
         case "debuggingEnabled":
           final boolean debuggingEnabled = (boolean) settings.get(key);
 

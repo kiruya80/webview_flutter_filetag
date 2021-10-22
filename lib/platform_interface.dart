@@ -34,9 +34,7 @@ abstract class WebViewPlatformCallbacksHandler {
   /// /// Only works when [WebSettings.hasProgressTracking] is set to `true`.
   void onProgress(int progress);
 
-  // void onShowFileChooser(bool allowMultipleFiles, List<String> acceptTypes);
-  // Future<String> Function(bool allowMultipleFiles, List<String>  acceptTypes) onShowFileChooser;
-  Future<List<String>?> onShowFileChooser({required bool allowMultipleFiles, required List   acceptTypes});
+  Future<List<dynamic>?> onShowFileChooser(bool allowMultipleFiles, List acceptTypes);
 
   /// Report web resource loading error to the host application.
   void onWebResourceError(WebResourceError error);

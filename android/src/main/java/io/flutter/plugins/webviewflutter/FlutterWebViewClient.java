@@ -144,49 +144,60 @@ class FlutterWebViewClient {
   void onShowFileChooser(
           ValueCallback<Uri[]> filePathCallback_,
           boolean allowMultipleFiles, List<String>  acceptTypes) {
-      Log.e(TAG, "onShowFileChooser  ================" + allowMultipleFiles + " , " + acceptTypes.toString());
-      this.filePathCallback = filePathCallback_;
-      Map<String, Object> args = new HashMap<>();
+    Log.e(TAG, "onShowFileChooser  ================" + allowMultipleFiles + " , " + acceptTypes.toString());
+    this.filePathCallback = filePathCallback_;
+
+    Map<String, Object> args = new HashMap<>();
     args.put("allowMultipleFiles", allowMultipleFiles);
     args.put("acceptTypes", acceptTypes);
-//    methodChannel.invokeMethod("onShowFileChooser", args);
 
-//    filePathCallback.onReceiveValue(result);
-//    filePathCallback = null;
+//    methodChannel.invokeMethod("onShowFileChooser", args);
 
     methodChannel.invokeMethod("onShowFileChooser", args, new MethodChannel.Result() {
 
       @Override
       public void success(Object response) {
-        Log.e(TAG, "invokeMethod onShowFileChooser  ================" + response.toString());
 
         if (response instanceof List ) {
           List<String> reslutFile = (List) response;
-          Log.e(TAG, "reeusltUrl ================= " + reslutFile);
 
+          if (reslutFile != null && reslutFile.size() > 0) {
+            Log.e(TAG, "reeusltUrl ================= " + reslutFile);
+            Uri[] results = new Uri[reslutFile.size()];
+            for (int i = 0; i < reslutFile.size(); i++) {
 
-          String testUrl = "/storage/emulated/0/Pictures/wjtb_middle/IMG_20211015_152225.jpg";
-          File tempFile = new File( testUrl);
-          Log.e(TAG, "tempFile ================= " + tempFile.toString());
-          Uri fileUri = Uri.parse("file:" + tempFile.getAbsolutePath());
-          Log.e(TAG, "fileUri ================= " + fileUri.toString());
+              // todo test
+              String testUrl = "/storage/emulated/0/Pictures/wjtb_middle/IMG_20211015_152225.jpg";
+              File tempFile = new File( testUrl);
+//              File tempFile = new File(reslutFile.get(i));
+              Log.e(TAG, "tempFile ================= " + tempFile.toString());
+              Uri fileUri = Uri.parse("file:" + tempFile.getAbsolutePath());
+              Log.e(TAG, "fileUri ================= " + fileUri.toString());
 
-          Uri[] results = new Uri[]{fileUri};
-        filePathCallback.onReceiveValue(results);
-        filePathCallback = null;
+//              results[i] = Uri.parse(uriStrings[i]);
+              results[i] = fileUri;
+            }
+
+//          Uri[] results = new Uri[]{fileUri};
+            filePathCallback.onReceiveValue(results);
+          } else {
+            filePathCallback.onReceiveValue("");
+          }
+
+          filePathCallback = null;
         }
       }
 
       @Override
       public void error(String errorCode, String s1, Object o) {
-//        filePathCallback.onReceiveValue("");
+        filePathCallback.onReceiveValue("");
         filePathCallback = null;
         throw new IllegalStateException("navigationRequest calls must succeed");
       }
 
       @Override
       public void notImplemented() {
-//        filePathCallback.onReceiveValue("");
+        filePathCallback.onReceiveValue("");
         filePathCallback = null;
         throw new IllegalStateException(
                 "navigationRequest must be implemented by the webview method channel");

@@ -148,7 +148,7 @@ typedef void PageFinishedCallback(String url);
 /// Signature for when a [WebView] is loading a page.
 typedef void PageLoadingCallback(int progress);
 
-typedef Future<List<String>?> ShowFileChooserCallback(bool allowMultipleFiles, List  acceptTypes);
+typedef Future<List<dynamic>?> ShowFileChooserCallback(bool allowMultipleFiles, List  acceptTypes);
 
 /// Signature for when a [WebView] has failed to load a resource.
 typedef void WebResourceErrorCallback(WebResourceError error);
@@ -618,16 +618,11 @@ class _PlatformCallbacksHandler implements WebViewPlatformCallbacksHandler {
   }
 
   @override
-  Future<List<String>?> onShowFileChooser({
-    required bool allowMultipleFiles,
-    required List  acceptTypes,
-  }) async {
-    if (_widget.onShowFileChooser != null) {
-      return await _widget.onShowFileChooser!(allowMultipleFiles, acceptTypes);
+  Future<List?> onShowFileChooser(bool allowMultipleFiles, List acceptTypes) async {
+      if (_widget.onShowFileChooser != null) {
+        return await _widget.onShowFileChooser!(allowMultipleFiles, acceptTypes);
+      }
     }
-
-    return null;
-  }
 }
 
 /// Controls a [WebView].
