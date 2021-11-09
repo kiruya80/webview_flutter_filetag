@@ -181,7 +181,7 @@ class FlutterWebViewClient {
 //          Uri[] results = new Uri[]{fileUri};
             filePathCallback.onReceiveValue(results);
           } else {
-            filePathCallback.onReceiveValue("");
+            filePathCallback.onReceiveValue(null);
           }
 
           filePathCallback = null;
@@ -190,14 +190,14 @@ class FlutterWebViewClient {
 
       @Override
       public void error(String errorCode, String s1, Object o) {
-        filePathCallback.onReceiveValue("");
+        filePathCallback.onReceiveValue(null);
         filePathCallback = null;
         throw new IllegalStateException("navigationRequest calls must succeed");
       }
 
       @Override
       public void notImplemented() {
-        filePathCallback.onReceiveValue("");
+        filePathCallback.onReceiveValue(null);
         filePathCallback = null;
         throw new IllegalStateException(
                 "navigationRequest must be implemented by the webview method channel");
