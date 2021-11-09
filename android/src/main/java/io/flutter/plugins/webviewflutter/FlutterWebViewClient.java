@@ -167,9 +167,9 @@ class FlutterWebViewClient {
             for (int i = 0; i < reslutFile.size(); i++) {
 
               // todo test
-              String testUrl = "/storage/emulated/0/Pictures/wjtb_middle/IMG_20211015_152225.jpg";
-              File tempFile = new File( testUrl);
-//              File tempFile = new File(reslutFile.get(i));
+//              String testUrl = "/storage/emulated/0/Pictures/wjtb_middle/IMG_20211015_152225.jpg";
+//              File tempFile = new File( testUrl);
+              File tempFile = new File(reslutFile.get(i));
               Log.e(TAG, "tempFile ================= " + tempFile.toString());
               Uri fileUri = Uri.parse("file:" + tempFile.getAbsolutePath());
               Log.e(TAG, "fileUri ================= " + fileUri.toString());
