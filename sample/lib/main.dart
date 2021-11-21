@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sample/webiew_flutter_example.screen.dart';
+
+import 'webiew_flutter_example.screen.dart';
 
 void main() {
   runApp(MyApp());
